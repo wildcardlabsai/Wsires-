@@ -84,6 +84,19 @@ export const getPortfolio = cache(async (): Promise<PortfolioExample[]> => {
   return merge(defaultPortfolio, settings[SETTINGS_KEYS.portfolio]);
 });
 
+export const getWebsiteTemplates = cache(async () => {
+  const supabase = (await createServerSupabase()) ?? createAdminSupabase();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from('website_templates')
+    .select('*')
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true });
+
+  return error || !data ? [] : data;
+});
+
 /** Live pricing. Plans are rows, so pricing is editable from the admin area. */
 export const getPlans = cache(async (): Promise<PlanRow[]> => {
   const supabase = (await createServerSupabase()) ?? createAdminSupabase();
