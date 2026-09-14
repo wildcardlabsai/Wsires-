@@ -97,7 +97,7 @@ export function sendPurchaseConfirmationEmail(
       heading: 'Thank you — your order is confirmed',
       body: paragraphs(
         `Hello ${firstName(opts.name)},`,
-        `We have received your setup payment for the <strong>${escapeHtml(opts.planName)}</strong> package. Your monthly subscription begins when your website goes live, not today.`,
+        `We have received your payment for the <strong>${escapeHtml(opts.planName)}</strong> package — your setup fee and first month together. Your subscription will then renew automatically each month.`,
         'The next step is the onboarding form. Once that is with us, we start building.',
       ),
       details: [

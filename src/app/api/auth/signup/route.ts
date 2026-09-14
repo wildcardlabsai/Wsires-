@@ -115,11 +115,12 @@ export async function POST(request: Request) {
   void sendWelcomeEmail({ to: data.email, name: data.fullName, businessName: data.businessName }).catch(() => {});
 
   const needsEmailConfirmation = !signUpResult.session;
+  const postAuthDestination = data.planSlug ? `/checkout?plan=${encodeURIComponent(data.planSlug)}` : '/onboarding';
 
   return NextResponse.json({
     data: {
       needsEmailConfirmation,
-      redirectTo: needsEmailConfirmation ? '/signup/check-email' : '/onboarding',
+      redirectTo: needsEmailConfirmation ? '/signup/check-email' : postAuthDestination,
     },
   });
 }
