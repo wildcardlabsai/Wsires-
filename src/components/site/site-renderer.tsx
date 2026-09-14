@@ -32,11 +32,14 @@ export function SiteRenderer({
   page,
   basePath = '',
   linkSuffix = '',
+  switchLocaleQuery,
 }: {
   site: RenderableSite;
   page: RenderablePage;
   basePath?: string;
   linkSuffix?: string;
+  /** Query string (e.g. "?lang=cy") that switches the *current* page to the other language, for bilingual sites. */
+  switchLocaleQuery?: string;
 }) {
   const theme = resolveTheme(site.template?.style_tokens, site.website.theme);
   const nav: NavItem[] = site.pages
@@ -45,6 +48,12 @@ export function SiteRenderer({
       label: p.nav_label ?? p.title,
       href: `${basePath}${p.is_home ? '/' : `/${p.slug}`}${linkSuffix}`,
     }));
+  const languageSwitch = switchLocaleQuery
+    ? {
+        currentLocale: site.locale,
+        href: `${basePath}${page.is_home ? '/' : `/${page.slug}`}${switchLocaleQuery}`,
+      }
+    : undefined;
 
   return (
     <div style={{ backgroundColor: theme.surface }}>
@@ -56,6 +65,7 @@ export function SiteRenderer({
         nav={nav}
         theme={theme}
         currentPath={`${basePath}${page.is_home ? '/' : `/${page.slug}`}`}
+        languageSwitch={languageSwitch}
       />
 
       <main>

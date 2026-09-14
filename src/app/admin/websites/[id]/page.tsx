@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ExternalLink } from 'lucide-react';
 
+import { LanguageModeControl } from '@/components/admin/language-mode-control';
 import { WebsiteStatusControl } from '@/components/admin/website-status-control';
+import { WelshContentEditor } from '@/components/admin/website-content-editor';
 import { PageHeader } from '@/components/shared/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +16,7 @@ import { formatDateTime } from '@/lib/utils';
 import type {
   BusinessRow,
   CustomerRow,
+  WebsiteContentRow,
   WebsitePageRow,
   WebsiteRow,
   WebsiteStatusHistoryRow,
@@ -33,19 +36,23 @@ export default async function AdminWebsiteDetailPage({ params }: { params: Promi
   };
   if (!website) notFound();
 
-  const [customerResult, businessResult, pagesResult, historyResult] = await Promise.all([
+  const [customerResult, businessResult, pagesResult, historyResult, contentResult] = await Promise.all([
     supabase.from('customers').select('*').eq('id', website.customer_id).maybeSingle(),
     website.business_id
       ? supabase.from('businesses').select('*').eq('id', website.business_id).maybeSingle()
       : Promise.resolve({ data: null }),
     supabase.from('website_pages').select('*').eq('website_id', id).order('sort_order'),
     supabase.from('website_status_history').select('*').eq('website_id', id).order('created_at', { ascending: false }).limit(10),
+    supabase.from('website_content').select('*').eq('website_id', id).order('sort_order'),
   ]);
 
   const customer = customerResult.data as CustomerRow | null;
   const business = businessResult.data as BusinessRow | null;
   const pages = (pagesResult.data ?? []) as WebsitePageRow[];
   const history = (historyResult.data ?? []) as WebsiteStatusHistoryRow[];
+  const content = (contentResult.data ?? []) as WebsiteContentRow[];
+  const enSections = content.filter((s) => s.locale === 'en');
+  const cySections = content.filter((s) => s.locale === 'cy');
 
   return (
     <div className="space-y-6">
@@ -82,7 +89,12 @@ export default async function AdminWebsiteDetailPage({ params }: { params: Promi
             <Row label="Slug" value={website.slug} />
             <Row label="Subdomain" value={website.subdomain ?? '—'} />
             <Row label="Custom domain" value={website.primary_domain ?? '—'} />
-            <Row label="Language" value={website.language_mode} />
+            <div className="flex items-center justify-between gap-4">
+              <dt className="text-charcoal-500">Language</dt>
+              <dd>
+                <LanguageModeControl websiteId={website.id} languageMode={website.language_mode} />
+              </dd>
+            </div>
             <Row label="Industry" value={business?.industry?.replace(/_/g, ' ') ?? '—'} />
           </CardContent>
         </Card>
@@ -109,6 +121,36 @@ export default async function AdminWebsiteDetailPage({ params }: { params: Promi
           </CardContent>
         </Card>
       </div>
+
+      {website.language_mode === 'bilingual' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Welsh content</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {enSections.length === 0 ? (
+              <p className="text-sm text-charcoal-500">No English content to translate yet.</p>
+            ) : (
+              <ul className="space-y-2">
+                {enSections.map((section) => (
+                  <li key={section.id} className="flex items-center justify-between gap-3 rounded-lg border border-border p-4">
+                    <span className="text-sm font-medium capitalize text-charcoal-800">
+                      {section.section_key.replace(/_/g, ' ')}
+                    </span>
+                    <WelshContentEditor
+                      websiteId={website.id}
+                      enSection={section}
+                      cySection={cySections.find(
+                        (s) => s.section_key === section.section_key && s.page_id === section.page_id,
+                      )}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>

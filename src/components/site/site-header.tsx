@@ -19,6 +19,7 @@ export function SiteHeader({
   nav,
   theme,
   currentPath,
+  languageSwitch,
 }: {
   businessName: string;
   logoUrl?: string | null;
@@ -26,6 +27,8 @@ export function SiteHeader({
   nav: NavItem[];
   theme: ResolvedTheme;
   currentPath: string;
+  /** Present only on bilingual sites — a link that re-renders the current page in the other language. */
+  languageSwitch?: { currentLocale: 'en' | 'cy'; href: string };
 }) {
   const [open, setOpen] = React.useState(false);
   const transparent = theme.navStyle === 'transparent';
@@ -69,6 +72,18 @@ export function SiteHeader({
         </nav>
 
         <div className="flex items-center gap-3">
+          {languageSwitch && (
+            <Link
+              href={languageSwitch.href}
+              className={`hidden items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs font-semibold sm:inline-flex ${
+                transparent ? 'border-white/40 text-white' : ''
+              }`}
+              style={transparent ? undefined : { borderColor: `${theme.ink}33`, color: theme.ink }}
+              aria-label={languageSwitch.currentLocale === 'cy' ? 'Switch to English' : 'Newid i Gymraeg'}
+            >
+              {languageSwitch.currentLocale === 'cy' ? 'EN' : 'CY'}
+            </Link>
+          )}
           {phone && (
             <a
               href={telHref(phone) ?? '#'}
@@ -106,6 +121,16 @@ export function SiteHeader({
                 {item.label}
               </Link>
             ))}
+            {languageSwitch && (
+              <Link
+                href={languageSwitch.href}
+                onClick={() => setOpen(false)}
+                className="rounded-md border px-2 py-2.5 text-center text-sm font-semibold"
+                style={{ borderColor: `${theme.ink}33`, color: theme.ink }}
+              >
+                {languageSwitch.currentLocale === 'cy' ? 'English' : 'Cymraeg'}
+              </Link>
+            )}
             {phone && (
               <a
                 href={telHref(phone) ?? '#'}

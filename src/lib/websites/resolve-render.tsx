@@ -4,7 +4,13 @@ import type { Metadata } from 'next';
 import { getSessionUser } from '@/lib/auth/session';
 import { buildRenderableSite, findPage, type RenderableSite } from './render-data';
 import { buildPageMetadata, faqJsonLd, localBusinessJsonLd, siteCanonicalUrl } from './seo';
-import type { WebsiteRow } from '@/types/database';
+import type { SiteLocale, WebsiteRow } from '@/types/database';
+
+/** Normalises a `?lang=` query value to a supported locale, or undefined. */
+export function parseRequestedLocale(value: string | string[] | undefined): SiteLocale | undefined {
+  const raw = Array.isArray(value) ? value[0] : value;
+  return raw === 'cy' || raw === 'en' ? raw : undefined;
+}
 
 /**
  * Shared path from "resolved website row" to "rendered page + metadata",
@@ -14,7 +20,7 @@ import type { WebsiteRow } from '@/types/database';
 export async function resolveSitePage(
   website: WebsiteRow | null,
   pathSegments: string[] | undefined,
-  opts: { requireLiveOrPreviewToken?: string; requireOwner?: boolean } = {},
+  opts: { requireLiveOrPreviewToken?: string; requireOwner?: boolean; locale?: SiteLocale } = {},
 ): Promise<{ site: RenderableSite; page: NonNullable<ReturnType<typeof findPage>> }> {
   if (!website) notFound();
 
@@ -39,11 +45,25 @@ export async function resolveSitePage(
     }
   }
 
-  const site = await buildRenderableSite(website);
-  const slug = (pathSegments ?? []).join('/');
-  const page = findPage(site, slug);
-  if (!page) notFound();
+  /* A requested locale only applies to bilingual sites — an English-only or
+     Welsh-only site always renders in the language it was built in. */
+  const requestedLocale = website.language_mode === 'bilingual' ? opts.locale : undefined;
 
+  const site = await buildRenderableSite(website, requestedLocale);
+  const slug = (pathSegments ?? []).join('/');
+  let page = findPage(site, slug);
+
+  /* A page may not have content translated yet — fall back to the site's
+     default language rather than showing an empty page. */
+  if (!page || page.sections.length === 0) {
+    const fallback = await buildRenderableSite(website, website.default_locale);
+    const fallbackPage = findPage(fallback, slug);
+    if (fallbackPage && fallbackPage.sections.length > 0) {
+      return { site: fallback, page: fallbackPage };
+    }
+  }
+
+  if (!page) notFound();
   return { site, page };
 }
 
