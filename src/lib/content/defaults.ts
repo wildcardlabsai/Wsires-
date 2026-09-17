@@ -291,7 +291,7 @@ function defaultFaqs(): Faq[] {
     {
       question: 'Can I make changes to the website myself?',
       answer:
-        'You can update the everyday things yourself from your dashboard — phone number, opening hours, services, photos, testimonials. Larger changes to layout or new pages go to us, and we do them for you. We deliberately do not hand you a complicated page builder.',
+        'We deliberately do not hand you a page builder to fight with. When you want something changed — a phone number, opening hours, a new photo, a testimonial — you tell us from your dashboard and we make the change. You can still upload photos and review your enquiries yourself; the site itself is looked after by us.',
       category: 'Managing your site',
     },
     {
@@ -648,7 +648,7 @@ export const defaultIndustries: IndustryContent[] = [
       {
         question: 'Can I update my menu myself?',
         answer:
-          'Yes — menus are one of the things you can edit from your dashboard, and changes are live once we have given them a quick check.',
+          'Send us your updated menu whenever it changes — by email or from your dashboard — and we will have it live the same day. No need to fight with a page builder to swap a price or add a dish.',
       },
       {
         question: 'Can I take bookings?',

@@ -3,15 +3,22 @@ import { z } from 'zod';
 
 import { handleRoute, requireApiCustomer } from '@/lib/auth/api';
 import { sendChangesRequestedEmail } from '@/lib/email/templates';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { requireAdminSupabase } from '@/lib/supabase/server';
 
 const schema = z.object({ summary: z.string().trim().min(10, 'Tell us a bit more about what you’d like changed.').max(4000) });
 
+/**
+ * The one channel customers have for changing their site content now that
+ * self-editing is gone — this writes a content_change_request row (RLS
+ * already allows a customer to insert their own) and, for a preview
+ * awaiting approval, moves the website out of that stage — a protected
+ * field only the service role can write. Both go through the admin client
+ * so the two updates use one consistent, already-authorised connection.
+ */
 export async function POST(request: Request) {
   return handleRoute(async () => {
     const { actor, customer } = await requireApiCustomer();
-    const supabase = await createServerSupabase();
-    if (!supabase) return NextResponse.json({ error: 'Not configured' }, { status: 503 });
+    const supabase = requireAdminSupabase();
 
     const payload = await request.json().catch(() => null);
     const parsed = schema.safeParse(payload);

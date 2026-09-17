@@ -4,19 +4,25 @@ import { handleRoute, requireApiCustomer } from '@/lib/auth/api';
 import { buildInitialContent } from '@/lib/websites/content-builder';
 import { DEFAULT_PAGE_KEYS, pageCatalogItem } from '@/lib/websites/pages-catalog';
 import { sendAdminOnboardingNotification, sendInformationReceivedEmail } from '@/lib/email/templates';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { requireAdminSupabase } from '@/lib/supabase/server';
 import { onboardingDataSchema } from '@/lib/validation/schemas';
 
 /**
  * Finalises onboarding: validates the accumulated draft, writes the
  * business record, provisions the website's pages and initial content, and
  * moves the website into the production queue.
+ *
+ * This is the one-time brief a customer hands the agency — not an editing
+ * session — so every write goes through the service role once
+ * requireApiCustomer() has confirmed the caller owns this submission.
+ * `businesses`, `website_pages` and `website_content` have no (or, for
+ * businesses, no longer any) customer write policy: those tables are
+ * agency-managed from here on.
  */
 export async function POST() {
   return handleRoute(async () => {
     const { actor, customer } = await requireApiCustomer();
-    const supabase = await createServerSupabase();
-    if (!supabase) return NextResponse.json({ error: 'Not configured' }, { status: 503 });
+    const supabase = requireAdminSupabase();
 
     const { data: submission } = await supabase
       .from('onboarding_submissions')

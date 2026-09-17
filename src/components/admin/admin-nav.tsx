@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   BarChart3,
+  ClipboardList,
   CreditCard,
   FileText,
   Globe,
@@ -34,6 +35,7 @@ const NAV = [
   { label: 'Subscriptions', href: '/admin/subscriptions', icon: Repeat },
   { label: 'Payments', href: '/admin/payments', icon: CreditCard },
   { label: 'Leads', href: '/admin/leads', icon: FileText },
+  { label: 'Change requests', href: '/admin/change-requests', icon: ClipboardList },
   { label: 'Content', href: '/admin/content', icon: FileText },
   { label: 'Templates', href: '/admin/templates', icon: LayoutTemplate },
   { label: 'Domains', href: '/admin/domains', icon: Globe },

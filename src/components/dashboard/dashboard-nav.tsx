@@ -14,7 +14,6 @@ import {
   LifeBuoy,
   LogOut,
   Menu,
-  Settings,
   User,
   X,
 } from 'lucide-react';
@@ -28,7 +27,6 @@ import { cn } from '@/lib/utils';
 const NAV = [
   { label: 'Overview', href: '/dashboard', icon: LayoutDashboard, exact: true },
   { label: 'My Website', href: '/dashboard/website', icon: Home },
-  { label: 'Website Content', href: '/dashboard/content', icon: Settings },
   { label: 'Pages', href: '/dashboard/pages', icon: Globe },
   { label: 'Media', href: '/dashboard/media', icon: ImageIcon },
   { label: 'Domain', href: '/dashboard/domain', icon: Globe },

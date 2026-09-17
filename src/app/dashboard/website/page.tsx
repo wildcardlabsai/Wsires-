@@ -14,10 +14,20 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { websiteUrl } from '@/lib/tenant';
 import { WEBSITE_PIPELINE, WEBSITE_STATUS } from '@/lib/status';
 import { formatDateTime } from '@/lib/utils';
-import type { WebsiteStatusHistoryRow } from '@/types/database';
+import type { WebsiteStatus, WebsiteStatusHistoryRow } from '@/types/database';
 
 export const metadata: Metadata = { title: 'My Website', robots: { index: false } };
 export const dynamic = 'force-dynamic';
+
+/** Any stage where there's something built (or being built) worth commenting on. */
+const CAN_REQUEST_CHANGES = new Set<WebsiteStatus>([
+  'in_production',
+  'awaiting_customer_approval',
+  'changes_requested',
+  'approved',
+  'domain_setup',
+  'live',
+]);
 
 export default async function MyWebsitePage() {
   const { customer } = await requireCustomer();
@@ -115,9 +125,7 @@ export default async function MyWebsitePage() {
             </ol>
           )}
 
-          {(website.status === 'awaiting_customer_approval' ||
-            website.status === 'live' ||
-            website.status === 'approved') && (
+          {CAN_REQUEST_CHANGES.has(website.status) && (
             <div className="mt-6 flex flex-wrap gap-3 border-t border-border pt-6">
               {website.status === 'awaiting_customer_approval' && <ApproveButton />}
               <RequestChangesButton />
@@ -154,10 +162,10 @@ export default async function MyWebsitePage() {
             </dl>
             <div className="mt-5 flex gap-2 border-t border-border pt-4">
               <Button asChild size="sm" variant="outline">
-                <Link href="/dashboard/content">Edit content</Link>
+                <Link href="/dashboard/pages">View pages</Link>
               </Button>
               <Button asChild size="sm" variant="outline">
-                <Link href="/dashboard/pages">Manage pages</Link>
+                <Link href="/dashboard/support">Raise a request</Link>
               </Button>
             </div>
           </CardContent>

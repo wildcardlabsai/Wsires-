@@ -174,7 +174,8 @@ export const onboardingStep5 = z.object({
 });
 
 export const onboardingStep6 = z.object({
-  templateSlug: z.string().trim().min(1, 'Choose a website style'),
+  /** Optional — a starting style preference for the agency to work from, not a binding choice. */
+  templateSlug: z.string().trim().optional().default(''),
 });
 
 export const onboardingStep7 = z.object({

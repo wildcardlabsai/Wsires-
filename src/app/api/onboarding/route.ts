@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { requireApiCustomer, handleRoute } from '@/lib/auth/api';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { createServerSupabase, requireAdminSupabase } from '@/lib/supabase/server';
 import { getOrCreateDraftWebsite } from '@/lib/websites/provisioning';
 import { onboardingSaveSchema } from '@/lib/validation/schemas';
 
@@ -12,7 +12,9 @@ export async function GET() {
     const supabase = await createServerSupabase();
     if (!supabase) return NextResponse.json({ error: 'Not configured' }, { status: 503 });
 
-    const website = await getOrCreateDraftWebsite(supabase, customer.id, {
+    /* Provisioning a website row is an admin-only write under RLS — ownership
+       is already confirmed by requireApiCustomer() above. */
+    const website = await getOrCreateDraftWebsite(requireAdminSupabase(), customer.id, {
       businessName: customer.business_name,
       planId: customer.plan_id,
     });

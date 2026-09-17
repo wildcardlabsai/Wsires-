@@ -1,15 +1,20 @@
 import { NextResponse } from 'next/server';
 
 import { handleRoute, requireApiCustomer } from '@/lib/auth/api';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { requireAdminSupabase } from '@/lib/supabase/server';
 import { domainRequestSchema, fieldErrors } from '@/lib/validation/schemas';
 
-/** Customer requests a domain be connected. Admin confirms DNS/SSL/live status manually. */
+/**
+ * Customer requests a domain be connected. Admin confirms DNS/SSL/live
+ * status manually. `domains` has no customer INSERT policy under RLS
+ * (domain provisioning is an admin-managed process), so this write goes
+ * through the service role once requireApiCustomer() has confirmed the
+ * caller owns the customer record the domain is being requested for.
+ */
 export async function POST(request: Request) {
   return handleRoute(async () => {
     const { customer } = await requireApiCustomer();
-    const supabase = await createServerSupabase();
-    if (!supabase) return NextResponse.json({ error: 'Not configured' }, { status: 503 });
+    const supabase = requireAdminSupabase();
 
     const payload = await request.json().catch(() => null);
     const parsed = domainRequestSchema.safeParse(payload);

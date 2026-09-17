@@ -50,7 +50,7 @@ export function StepReview({ draft, templates }: { draft: OnboardingDraft; templ
       <section>
         <h3 className="text-xs font-semibold uppercase tracking-wide text-cymru-600">Design</h3>
         <dl className="mt-2">
-          <ReviewRow label="Website style" value={template?.name} />
+          <ReviewRow label="Website style" value={template?.name ?? 'No preference — we’ll choose'} />
           <ReviewRow label="Colour scheme" value={draft.colourScheme} />
           <ReviewRow label="Logo" value={draft.logoUrl ? 'Uploaded' : undefined} />
           <ReviewRow label="Photos" value={draft.photoUrls.length > 0 ? `${draft.photoUrls.length} uploaded` : undefined} />

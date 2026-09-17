@@ -2,9 +2,17 @@
 
 **Professional websites for Welsh businesses. Made simple.**
 
-A production SaaS platform: a marketing website, customer and admin
-dashboards, a multi-tenant website builder/renderer, Stripe billing and
-transactional email — built on Next.js 15, Supabase and Stripe.
+A production web design and marketing agency platform: a marketing
+website, customer and admin dashboards, a multi-tenant website renderer,
+Stripe billing and transactional email — built on Next.js 15, Supabase
+and Stripe.
+
+**Content model:** CymruSites builds and maintains every customer's
+website — there is no self-service page builder. A customer's onboarding
+submission is a one-time brief (including an *optional* website-style
+preference); after that, every change goes through a support ticket or a
+change request, both reviewed and actioned by an admin. This is enforced
+at the database level, not just in the UI — see "Security" below.
 
 This is a working application, not a prototype. Every button, form and
 dashboard listed below does what it says: writes to a real database,
@@ -30,8 +38,10 @@ src/
     (marketing)/        Public website — home, pricing, industries, examples…
     (auth)/              Login, signup, password reset
     onboarding/          10-step onboarding wizard
-    dashboard/           Customer dashboard (11 sections)
-    admin/               Admin dashboard (13 sections)
+    dashboard/           Customer dashboard (10 sections — read/track your
+                          site, media, domain, analytics, leads, billing;
+                          changes go through Support, not self-editing)
+    admin/               Admin dashboard (14 sections, incl. Change requests)
     sites/domain/[domain]/[[...path]]      Customer sites on their own domain
     sites/subdomain/[slug]/[[...path]]     Customer sites on *.cymrusites.co.uk
     demo/[slug]/[[...path]]                /examples portfolio demo sites
@@ -164,9 +174,15 @@ sitemap route is a natural next addition (see "Future work" below).
 ## Security
 
 - Row Level Security is enabled on every table; policies are defined in
-  `supabase/migrations/20250101000001_rls.sql`. Customers can only ever
-  read or write rows tied to their own `customers.id`; admins are checked
-  by a `SECURITY DEFINER` `is_admin()` function, not a client-side flag.
+  `supabase/migrations/20250101000001_rls.sql`, with
+  `20250101000004_agency_model.sql` tightening `businesses` and
+  `websites` so a customer can read but never write either directly —
+  the agency-managed content model is enforced by the database, not just
+  hidden from the UI. Onboarding and admin routes write through the
+  service role after verifying the caller's identity in application code.
+- Customers can only ever read or write rows tied to their own
+  `customers.id`; admins are checked by a `SECURITY DEFINER` `is_admin()`
+  function, not a client-side flag.
 - Triggers block a customer from editing their own `role`, subscription
   status, or website status/slug/plan directly, even with a valid session.
 - Every API route re-derives the caller's identity server-side

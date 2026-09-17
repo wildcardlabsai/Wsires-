@@ -154,8 +154,8 @@ export default async function HowItWorksPage() {
                 body: 'New phone number, a price change, a new service, different photos. We make the change — usually the same working day, always within two.',
               },
               {
-                title: 'You can edit the everyday things yourself',
-                body: 'Opening hours, contact details, services, photos and testimonials can be updated from your dashboard whenever you like. Bigger changes come to us.',
+                title: 'Send us photos whenever you like',
+                body: 'Upload new photos of your work straight into your dashboard — we will place them on your site and let you know once they are live.',
               },
               {
                 title: 'We keep the technical side working',

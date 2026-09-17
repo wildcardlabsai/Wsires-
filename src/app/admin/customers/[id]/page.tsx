@@ -9,7 +9,9 @@ import {
   SendEmailDialog,
   SuspendReactivateButton,
 } from '@/components/admin/customer-actions';
+import { BusinessEditorForm } from '@/components/admin/business-editor-form';
 import { CancelSubscriptionButton } from '@/components/admin/subscription-actions';
+import { TemplateControl } from '@/components/admin/template-control';
 import { WebsiteStatusControl } from '@/components/admin/website-status-control';
 import { PageHeader } from '@/components/shared/page-header';
 import { Badge } from '@/components/ui/badge';
@@ -34,6 +36,7 @@ import { formatDate, formatDateTime, formatPrice } from '@/lib/utils';
 import type {
   AdminNoteRow,
   BusinessRow,
+  ContentChangeRequestRow,
   CustomerRow,
   OnboardingSubmissionRow,
   OrderRow,
@@ -42,7 +45,9 @@ import type {
   SubscriptionRow,
   SupportTicketRow,
   WebsiteRow,
+  WebsiteTemplateRow,
 } from '@/types/database';
+import { CHANGE_REQUEST_STATUS } from '@/lib/status';
 
 export const metadata: Metadata = { title: 'Customer', robots: { index: false } };
 export const dynamic = 'force-dynamic';
@@ -98,6 +103,13 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
 
   const website = websites[0] ?? null;
   const plan = plans.find((p) => p.id === customer.plan_id);
+
+  const [templatesResult, changeRequestsResult] = await Promise.all([
+    supabase.from('website_templates').select('*').order('sort_order'),
+    supabase.from('content_change_requests').select('*').eq('customer_id', id).order('created_at', { ascending: false }),
+  ]);
+  const templates = (templatesResult.data ?? []) as WebsiteTemplateRow[];
+  const changeRequests = (changeRequestsResult.data ?? []) as ContentChangeRequestRow[];
 
   return (
     <div className="space-y-6">
@@ -198,6 +210,10 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
                   <Row label="Subdomain" value={website.subdomain ?? '—'} />
                   <Row label="Custom domain" value={website.primary_domain ?? '—'} />
                 </div>
+                <div className="flex items-center justify-between border-t border-border pt-4">
+                  <span className="text-sm text-charcoal-500">Website style</span>
+                  <TemplateControl websiteId={website.id} templateId={website.template_id} templates={templates} />
+                </div>
                 <div className="border-t border-border pt-4">
                   <Link href={`/admin/websites/${website.id}`} className="text-sm font-medium text-cymru-700 hover:underline">
                     Open full website record →
@@ -206,6 +222,41 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
               </CardContent>
             </Card>
           )}
+
+          {changeRequests.length > 0 && (
+            <Card className="mt-6">
+              <CardHeader>
+                <CardTitle>Change requests</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {changeRequests.map((cr) => (
+                    <li key={cr.id} className="rounded-lg border border-border p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <Badge variant={CHANGE_REQUEST_STATUS[cr.status].variant} size="sm">
+                          {CHANGE_REQUEST_STATUS[cr.status].label}
+                        </Badge>
+                        <span className="text-xs text-charcoal-400">{formatDate(cr.created_at)}</span>
+                      </div>
+                      <p className="mt-2 text-sm text-charcoal-800">{cr.summary}</p>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/admin/change-requests" className="mt-4 inline-block text-sm font-medium text-cymru-700 hover:underline">
+                  Manage all change requests →
+                </Link>
+              </CardContent>
+            </Card>
+          )}
+
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Business details</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <BusinessEditorForm customerId={id} business={business} fallbackName={customer.business_name} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="billing">
