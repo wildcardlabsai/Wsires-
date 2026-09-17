@@ -84,10 +84,10 @@ export default async function HowItWorksPage() {
             <SectionHeading
               eyebrow="What we need from you"
               title="One form, about fifteen minutes"
-              description="You can save it and come back to it. If you get stuck on any of it, leave it blank and we will ring you about that bit."
+              description="If you get stuck on any of it, leave it blank and we will ring you about that bit."
             />
             <Button asChild className="mt-8">
-              <Link href="/signup">
+              <Link href="/contact">
                 Start your website
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
@@ -155,15 +155,15 @@ export default async function HowItWorksPage() {
               },
               {
                 title: 'Send us photos whenever you like',
-                body: 'Upload new photos of your work straight into your dashboard — we will place them on your site and let you know once they are live.',
+                body: 'Email or WhatsApp us new photos of your work — we will place them on your site and let you know once they are live.',
               },
               {
                 title: 'We keep the technical side working',
                 body: 'Hosting, SSL renewal, backups, security updates and uptime monitoring happen without you needing to know they exist.',
               },
               {
-                title: 'Your enquiries land in one place',
-                body: 'Every form submission is emailed to you and saved in your dashboard so you can track what you have followed up.',
+                title: 'Your enquiries land in your inbox',
+                body: 'Every form submission on your site is emailed straight to you, so nothing gets missed.',
               },
             ].map((item) => (
               <div key={item.title} className="rounded-xl border border-border bg-white p-6">

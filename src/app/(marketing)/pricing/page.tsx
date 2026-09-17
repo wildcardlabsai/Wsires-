@@ -65,8 +65,8 @@ export default async function PricingPage() {
         <PricingCards plans={plans} />
         <div className="mt-10 rounded-xl border border-border bg-white p-6 text-center shadow-subtle">
           <p className="text-sm text-charcoal-600">
-            Every plan is month-to-month. Cancel from your dashboard whenever you like — your site stays up
-            until the end of the period you have paid for.
+            Every plan is month-to-month. Cancel whenever you like by emailing or calling us — your site stays
+            up until the end of the period you have paid for.
           </p>
         </div>
       </Section>
@@ -89,7 +89,7 @@ export default async function PricingPage() {
                       {plan.name}
                     </span>
                     <span className="block text-[0.6875rem] font-normal normal-case tracking-normal text-charcoal-500">
-                      {formatPrice(plan.monthly_price_pence)}/mo
+                      {formatPrice(plan.monthlyPricePence)}/mo
                     </span>
                   </TableHead>
                 ))}
@@ -102,7 +102,7 @@ export default async function PricingPage() {
                   {plans.map((plan, planIndex) => (
                     <TableCell key={plan.id} className="text-center">
                       {'kind' in row && row.kind === 'pages' ? (
-                        <span className="text-sm font-medium text-charcoal-800">{plan.max_pages}</span>
+                        <span className="text-sm font-medium text-charcoal-800">{plan.maxPages}</span>
                       ) : planIndex >= (row.allFrom ?? 0) ? (
                         <Check className="mx-auto h-4 w-4 text-moss-600" strokeWidth={2.5} aria-label="Included" />
                       ) : (

@@ -72,13 +72,27 @@ export interface PortfolioExample {
   features: string[];
   templateSlug: string;
   accent: string;
-  demoHref: string;
 }
 
 export interface SeoDefaults {
   title: string;
   description: string;
   ogImage?: string;
+}
+
+export interface Plan {
+  id: string;
+  slug: string;
+  name: string;
+  tagline: string | null;
+  description: string | null;
+  setupPricePence: number;
+  monthlyPricePence: number;
+  currency: string;
+  maxPages: number;
+  features: string[];
+  isFeatured: boolean;
+  sortOrder: number;
 }
 
 export interface SiteContent {

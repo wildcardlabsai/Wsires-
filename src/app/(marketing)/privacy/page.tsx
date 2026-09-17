@@ -28,28 +28,24 @@ export default async function PrivacyPage() {
         {
           heading: 'What we collect',
           list: [
-            'Account details: your name, email address, phone number and password (stored only as a secure hash).',
-            'Business details: your business name, address, services, service areas and anything else you provide during onboarding so that we can build your website.',
-            'Billing details: your billing address and a Stripe customer reference. We never see or store your card number.',
-            'Support correspondence: the tickets and messages you send us.',
-            'Website analytics: page views, sessions and referral sources for your website, recorded without cookies or cross-site tracking.',
-            'Enquiries from your website: the name, contact details and message of anyone who fills in a form on your site.',
+            'Enquiry details: if you fill in a form on this website, we collect the name, business name, email address, phone number and message you provide.',
+            'Business details: anything you tell us about your business during a call, email or onboarding conversation, so that we can quote for and build your website.',
+            'Support correspondence: the emails and messages you send us once you are a customer.',
           ],
         },
         {
           heading: 'Why we use it',
           list: [
+            'To reply to your enquiry and provide a quote (legitimate interests).',
             'To provide the service you have bought — building, hosting and maintaining your website (performance of a contract).',
-            'To take payment and keep accurate financial records (contract and legal obligation).',
-            'To send you transactional emails about your account, website and billing (contract).',
+            'To send you emails about your account, website and billing (contract).',
             'To provide support when you contact us (contract).',
-            'To keep the platform secure and prevent abuse (legitimate interests).',
           ],
         },
         {
           heading: 'Enquiries from your website',
           paragraphs: [
-            'When someone fills in a contact form on your website, we store their message so that it appears in your dashboard and email it to you. For that data you are the data controller and we are your processor — we handle it only to pass it to you and never use it for anything else.',
+            'If your CymruSites website has a contact form, submissions are emailed straight to you and are not stored on any server we operate. For that data you are the data controller — we simply relay it to you.',
             'You are responsible for how you use those enquiries and for any privacy notice shown on your own website. We will help you get that right if you ask.',
           ],
         },
@@ -59,26 +55,21 @@ export default async function PrivacyPage() {
             'We use a small number of carefully chosen processors to run the service. Each one is bound by a data processing agreement and handles only what it needs to.',
           ],
           list: [
-            'Supabase — database, authentication and file storage.',
             'Vercel — application hosting and content delivery.',
-            'Stripe — payment processing and card handling.',
             'Resend — sending transactional email.',
           ],
         },
         {
           heading: 'How long we keep it',
           paragraphs: [
-            'We keep your account and website data for as long as you are a customer, and for 30 days after cancellation so that you can change your mind.',
+            'Enquiry and contact-form emails live in our mailbox for as long as any mailbox message does — we delete them once they are no longer needed.',
             'We keep financial records for six years, because HMRC requires it.',
-            'Website analytics are kept for 24 months and then deleted.',
-            'Support tickets are kept for two years after they are resolved.',
           ],
         },
         {
           heading: 'Cookies',
           paragraphs: [
-            'The CymruSites application uses one essential cookie to keep you signed in. We do not use advertising or cross-site tracking cookies, and there is no cookie banner because there is nothing to consent to.',
-            'The analytics we provide for your website count page views without setting a tracking cookie or building a profile of individual visitors.',
+            'This website does not use cookies, and there is no cookie banner because there is nothing to consent to.',
           ],
         },
         {
@@ -104,7 +95,7 @@ export default async function PrivacyPage() {
         {
           heading: 'Security',
           paragraphs: [
-            'Data is encrypted in transit and at rest. Access to customer data is restricted to the people who need it, and every database table enforces row-level access rules so one customer can never read another customer’s data.',
+            'Data is encrypted in transit. Access to any information you send us is restricted to the people who need it.',
             'If a data breach affects your personal data and poses a risk to you, we will tell you and the ICO within 72 hours.',
           ],
         },

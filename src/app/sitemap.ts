@@ -15,8 +15,6 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: 'weekly'
   { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
   { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
-  { path: '/signup', priority: 0.7, changeFrequency: 'yearly' },
-  { path: '/login', priority: 0.4, changeFrequency: 'yearly' },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

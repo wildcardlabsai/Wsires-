@@ -23,7 +23,7 @@ export const defaultSiteContent: SiteContent = {
     heading: 'Professional websites for Welsh businesses.',
     subheading:
       'Get a modern, mobile-friendly website without the agency price tag or the hassle. We build, host and maintain your website for you.',
-    primaryCta: { label: 'Get your website started', href: '/signup' },
+    primaryCta: { label: 'Get your website started', href: '/contact' },
     secondaryCta: { label: 'See examples', href: '/examples' },
     bullets: [
       'Live in about two weeks',
@@ -152,7 +152,7 @@ export const defaultSiteContent: SiteContent = {
       'Hosting on fast UK-facing infrastructure',
       'SSL certificate and automatic renewal',
       'Contact form that emails you instantly',
-      'Enquiries collected in your dashboard',
+      'Enquiries emailed to you as they come in',
       'WhatsApp and click-to-call buttons',
       'Google Maps and directions',
       'Search engine basics done properly',
@@ -279,19 +279,19 @@ function defaultFaqs(): Faq[] {
     {
       question: 'Is there a long contract?',
       answer:
-        'No. The monthly plan runs month to month and you can cancel from your dashboard at any time. Your website stays live until the end of the period you have paid for.',
+        'No. The monthly plan runs month to month and you can cancel at any time by emailing or calling us. Your website stays live until the end of the period you have paid for.',
       category: 'Pricing',
     },
     {
       question: 'Can I change my plan later?',
       answer:
-        'Yes. You can move up a plan at any time from your billing page and the change applies immediately, pro-rated. Moving down takes effect at your next renewal.',
+        'Yes. Tell us and we will move you up a plan straight away, or down from your next renewal.',
       category: 'Pricing',
     },
     {
       question: 'Can I make changes to the website myself?',
       answer:
-        'We deliberately do not hand you a page builder to fight with. When you want something changed — a phone number, opening hours, a new photo, a testimonial — you tell us from your dashboard and we make the change. You can still upload photos and review your enquiries yourself; the site itself is looked after by us.',
+        'We deliberately do not hand you a page builder to fight with. When you want something changed — a phone number, opening hours, a new photo, a testimonial — you email or ring us and we make the change. The site itself is looked after by us.',
       category: 'Managing your site',
     },
     {
@@ -315,7 +315,7 @@ function defaultFaqs(): Faq[] {
     {
       question: 'What happens to enquiries from my website?',
       answer:
-        'They are emailed to you straight away and also saved in your dashboard, so nothing gets lost in a spam folder. You can mark each one as contacted, quoted, won or lost.',
+        'They are emailed to you straight away, so nothing gets lost in a spam folder.',
       category: 'Being found',
     },
     {
@@ -608,7 +608,7 @@ export const defaultIndustries: IndustryContent[] = [
       {
         question: 'Can customers book online?',
         answer:
-          'Booking request forms are available on every plan, and structured online booking is included on Pro. Requests come into your dashboard and your inbox.',
+          'Booking request forms are available on every plan, and structured online booking is included on Pro. Requests are emailed to you as they come in.',
       },
       {
         question: 'Should I show my prices?',
@@ -648,7 +648,7 @@ export const defaultIndustries: IndustryContent[] = [
       {
         question: 'Can I update my menu myself?',
         answer:
-          'Send us your updated menu whenever it changes — by email or from your dashboard — and we will have it live the same day. No need to fight with a page builder to swap a price or add a dish.',
+          'Send us your updated menu whenever it changes and we will have it live the same day. No need to fight with a page builder to swap a price or add a dish.',
       },
       {
         question: 'Can I take bookings?',
@@ -728,7 +728,6 @@ export const defaultPortfolio: PortfolioExample[] = [
     features: ['Click-to-call', 'Accreditation badges', 'Service areas', 'Enquiry form', 'Local SEO'],
     templateSlug: 'y-cwm',
     accent: '#2F5444',
-    demoHref: '/demo/rhys-electrical',
   },
   {
     slug: 'cwm-valley-plumbing',
@@ -742,7 +741,6 @@ export const defaultPortfolio: PortfolioExample[] = [
     features: ['Emergency call bar', 'WhatsApp button', 'Gas Safe badge', 'Google Maps', 'Reviews'],
     templateSlug: 'y-bont',
     accent: '#B45309',
-    demoHref: '/demo/cwm-valley-plumbing',
   },
   {
     slug: 'taff-roofing',
@@ -756,7 +754,6 @@ export const defaultPortfolio: PortfolioExample[] = [
     features: ['Full-width gallery', 'Storm damage banner', 'Guarantee details', 'Free inspection form'],
     templateSlug: 'y-glannau',
     accent: '#C8102E',
-    demoHref: '/demo/taff-roofing',
   },
   {
     slug: 'dragon-landscapes',
@@ -770,7 +767,6 @@ export const defaultPortfolio: PortfolioExample[] = [
     features: ['Bilingual (EN/CY)', 'Before & after gallery', 'Seasonal sections', 'Quote form'],
     templateSlug: 'y-glannau',
     accent: '#3F6C58',
-    demoHref: '/demo/dragon-landscapes',
   },
   {
     slug: 'valleys-auto-care',
@@ -779,12 +775,11 @@ export const defaultPortfolio: PortfolioExample[] = [
     category: 'Automotive',
     location: 'Aberdare',
     description:
-      'Independent garage and MOT centre. Prices shown openly, opening hours impossible to miss and a booking request form that feeds straight into the dashboard.',
+      'Independent garage and MOT centre. Prices shown openly, opening hours impossible to miss and a booking request form that emails straight through.',
     pages: ['Home', 'MOT', 'Servicing', 'Repairs', 'Book in', 'Contact'],
     features: ['Booking requests', 'Price list', 'Opening hours', 'Reviews', 'Directions'],
     templateSlug: 'y-bont',
     accent: '#1D4ED8',
-    demoHref: '/demo/valleys-auto-care',
   },
   {
     slug: 'caffi-bryn',
@@ -798,33 +793,6 @@ export const defaultPortfolio: PortfolioExample[] = [
     features: ['Mobile menus', 'Opening hours', 'Booking enquiry', 'Gallery', 'Bilingual (EN/CY)'],
     templateSlug: 'y-castell',
     accent: '#7C2D45',
-    demoHref: '/demo/caffi-bryn',
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/* Settings key map                                                    */
-/* ------------------------------------------------------------------ */
-
-/**
- * Keys stored in the `settings` table. Admin → Content edits these; anything
- * missing falls back to the defaults above.
- */
-export const SETTINGS_KEYS = {
-  brand: 'content.brand',
-  hero: 'content.hero',
-  trustStrip: 'content.trust_strip',
-  promise: 'content.promise',
-  howItWorks: 'content.how_it_works',
-  whyUs: 'content.why_us',
-  included: 'content.included',
-  welsh: 'content.welsh',
-  localSeo: 'content.local_seo',
-  testimonials: 'content.testimonials',
-  faqs: 'content.faqs',
-  finalCta: 'content.final_cta',
-  seo: 'content.seo',
-  industries: 'content.industries',
-  portfolio: 'content.portfolio',
-  adminAllowlist: 'admin_email_allowlist',
-} as const;

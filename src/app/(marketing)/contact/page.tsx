@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 
 import { ContactForm } from '@/components/marketing/contact-form';
@@ -104,14 +103,9 @@ export default async function ContactPage() {
           <div className="mt-10 rounded-xl border border-border bg-white p-6">
             <p className="text-sm font-medium text-charcoal-900">Already a customer?</p>
             <p className="mt-1.5 text-sm leading-relaxed text-charcoal-600">
-              Raise a support ticket from your dashboard — it reaches the right person faster than this form.
+              Email or ring us directly using the details above — it reaches the right person faster than
+              this form.
             </p>
-            <Link
-              href="/dashboard/support"
-              className="mt-3 inline-block text-sm font-medium text-cymru-700 hover:underline"
-            >
-              Go to support
-            </Link>
           </div>
         </div>
 

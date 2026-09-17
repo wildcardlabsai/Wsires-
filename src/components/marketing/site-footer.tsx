@@ -31,7 +31,6 @@ const FOOTER_SECTIONS = [
       { label: 'About', href: '/about' },
       { label: 'Contact', href: '/contact' },
       { label: 'FAQ', href: '/faq' },
-      { label: 'Log in', href: '/login' },
     ],
   },
 ];

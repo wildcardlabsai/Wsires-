@@ -41,7 +41,7 @@ const NAV: NavItem[] = [
   { label: 'How it works', href: '/how-it-works' },
 ];
 
-export function SiteHeader({ signedIn = false }: { signedIn?: boolean }) {
+export function SiteHeader() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [industriesOpen, setIndustriesOpen] = React.useState(false);
@@ -148,20 +148,9 @@ export function SiteHeader({ signedIn = false }: { signedIn?: boolean }) {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          {signedIn ? (
-            <Button asChild size="sm" variant="secondary">
-              <Link href="/dashboard">Your dashboard</Link>
-            </Button>
-          ) : (
-            <>
-              <Button asChild size="sm" variant="ghost">
-                <Link href="/login">Log in</Link>
-              </Button>
-              <Button asChild size="sm">
-                <Link href="/signup">Get started</Link>
-              </Button>
-            </>
-          )}
+          <Button asChild size="sm">
+            <Link href="/contact">Get started</Link>
+          </Button>
         </div>
 
         <button
@@ -208,22 +197,8 @@ export function SiteHeader({ signedIn = false }: { signedIn?: boolean }) {
             </div>
 
             <div className="mt-8 flex flex-col gap-3">
-              {signedIn ? (
-                <Button asChild size="lg">
-                  <Link href="/dashboard">Your dashboard</Link>
-                </Button>
-              ) : (
-                <>
-                  <Button asChild size="lg">
-                    <Link href="/signup">Get your website started</Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline">
-                    <Link href="/login">Log in</Link>
-                  </Button>
-                </>
-              )}
-              <Button asChild size="lg" variant="ghost">
-                <Link href="/contact">Talk to us</Link>
+              <Button asChild size="lg">
+                <Link href="/contact">Get your website started</Link>
               </Button>
             </div>
           </nav>

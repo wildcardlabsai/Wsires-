@@ -49,7 +49,7 @@ const FEATURES = [
   {
     icon: Inbox,
     title: 'Enquiries you don’t lose',
-    body: 'Every form submission is emailed to you immediately and saved in your dashboard, so nothing disappears into a spam folder.',
+    body: 'Every form submission is emailed to you immediately, so nothing disappears into a spam folder.',
   },
   {
     icon: Search,
@@ -83,8 +83,8 @@ const FEATURES = [
   },
   {
     icon: BarChart3,
-    title: 'Simple analytics',
-    body: 'Visitors, pages and enquiries in plain numbers. Enough to see what is working, without a dashboard you need training for.',
+    title: 'You’ll know what’s working',
+    body: 'We set up analytics for your site and can talk you through visitors, pages and enquiries whenever you like — no dashboard or training needed.',
   },
   {
     icon: Globe,
@@ -224,7 +224,7 @@ export default async function WebsitesPage() {
       {/* Examples strip */}
       <Section tone="cream">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeading eyebrow="See it in practice" title="Working demonstration sites" />
+          <SectionHeading eyebrow="See it in practice" title="Examples of what we build" />
           <Button asChild variant="outline" className="shrink-0">
             <Link href="/examples">
               All examples
@@ -234,18 +234,17 @@ export default async function WebsitesPage() {
         </div>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {portfolio.slice(0, 3).map((example) => (
-            <Link key={example.slug} href={example.demoHref} className="group">
+            <div key={example.slug}>
               <SitePreview
                 businessName={example.businessName}
                 location={example.location}
                 accent={example.accent}
                 template={example.templateSlug}
                 compact
-                className="transition-shadow group-hover:shadow-lift"
               />
               <p className="mt-3 text-sm font-medium text-charcoal-900">{example.businessName}</p>
               <p className="text-xs text-charcoal-500">{example.industry}</p>
-            </Link>
+            </div>
           ))}
         </div>
       </Section>

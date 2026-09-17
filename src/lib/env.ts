@@ -2,9 +2,9 @@
  * Environment access.
  *
  * Nothing here throws at module load: the app must still build and the
- * marketing site must still render before Supabase/Stripe/Resend keys are
- * added. Features that genuinely need a key check `isConfigured` first and
- * surface an honest message instead of pretending to work.
+ * marketing site must still render before a Resend key is added. Email
+ * sending checks `isResendConfigured` first and logs instead of pretending
+ * to send.
  */
 
 function read(name: string): string | undefined {
@@ -14,25 +14,13 @@ function read(name: string): string | undefined {
 
 export const env = {
   /* Public */
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || undefined,
-  supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() || undefined,
   siteUrl:
     process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
     'http://localhost:3000',
   rootDomain: process.env.NEXT_PUBLIC_ROOT_DOMAIN?.trim() || 'cymrusites.co.uk',
-  stripePublishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() || undefined,
 
   /* Server only */
-  get supabaseServiceRoleKey() {
-    return read('SUPABASE_SERVICE_ROLE_KEY');
-  },
-  get stripeSecretKey() {
-    return read('STRIPE_SECRET_KEY');
-  },
-  get stripeWebhookSecret() {
-    return read('STRIPE_WEBHOOK_SECRET');
-  },
   get resendApiKey() {
     return read('RESEND_API_KEY');
   },
@@ -44,33 +32,12 @@ export const env = {
   },
 } as const;
 
-export const isSupabaseConfigured = Boolean(env.supabaseUrl && env.supabaseAnonKey);
-
-export function isServiceRoleConfigured(): boolean {
-  return Boolean(env.supabaseUrl && env.supabaseServiceRoleKey);
-}
-
-export function isStripeConfigured(): boolean {
-  return Boolean(env.stripeSecretKey);
-}
-
 export function isResendConfigured(): boolean {
   return Boolean(env.resendApiKey);
 }
 
-/** Absolute URL helper — used by emails, OG tags, Stripe redirects. */
+/** Absolute URL helper — used by emails and OG tags. */
 export function absoluteUrl(path = '/'): string {
   const base = env.siteUrl.replace(/\/$/, '');
   return path.startsWith('/') ? `${base}${path}` : `${base}/${path}`;
-}
-
-/** Which integrations are wired up — surfaced in the admin settings page. */
-export function integrationStatus() {
-  return {
-    supabase: isSupabaseConfigured,
-    supabaseAdmin: isServiceRoleConfigured(),
-    stripe: isStripeConfigured(),
-    stripeWebhook: Boolean(env.stripeWebhookSecret),
-    resend: isResendConfigured(),
-  };
 }

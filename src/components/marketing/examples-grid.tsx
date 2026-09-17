@@ -1,8 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 
 import { DemoBadge } from '@/components/marketing/sections';
 import { SitePreview } from '@/components/marketing/site-preview';
@@ -108,14 +106,6 @@ export function ExamplesGrid({
                     </dd>
                   </div>
                 </dl>
-
-                <Link
-                  href={example.demoHref}
-                  className="mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-cymru-700 hover:underline"
-                >
-                  View demo site
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
-                </Link>
               </div>
             </article>
           ))}

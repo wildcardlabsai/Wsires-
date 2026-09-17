@@ -98,7 +98,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
-                <Link href="/signup">
+                <Link href="/contact">
                   Get your website started
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </Link>

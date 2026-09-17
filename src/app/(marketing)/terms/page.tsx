@@ -28,9 +28,8 @@ export default async function TermsPage() {
         {
           heading: 'Fees and payment',
           paragraphs: [
-            'Each package has a one-off setup fee and a recurring monthly fee. The setup fee is payable before we begin work. The monthly fee begins when your website goes live and is collected automatically by card through Stripe.',
-            'We do not store your card details. Payment information is held by Stripe, who are PCI-DSS compliant.',
-            'If a monthly payment fails, we will attempt to take it again and contact you. If payment remains outstanding after 14 days we may suspend your website until the account is brought up to date.',
+            'Each package has a one-off setup fee and a recurring monthly fee. The setup fee is payable before we begin work. The monthly fee begins when your website goes live, and we will agree a payment method with you — by card, bank transfer or invoice.',
+            'If a monthly payment is missed, we will contact you. If payment remains outstanding after 14 days we may suspend your website until the account is brought up to date.',
           ],
         },
         {
@@ -62,7 +61,7 @@ export default async function TermsPage() {
         {
           heading: 'Cancellation',
           paragraphs: [
-            'You may cancel your monthly subscription at any time from your dashboard. Your website remains live until the end of the period you have already paid for.',
+            'You may cancel your monthly subscription at any time by emailing or calling us. Your website remains live until the end of the period you have already paid for.',
             'The setup fee is not refundable once work has begun, because it pays for work already completed. If you cancel before we have started building, we will refund it in full.',
             'We may cancel your service with 30 days’ notice, or immediately if you use the service unlawfully or fail to pay.',
           ],

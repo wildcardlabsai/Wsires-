@@ -4,26 +4,26 @@ import { Check, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/lib/utils';
 import { cn } from '@/lib/utils';
-import type { PlanRow } from '@/types/database';
+import type { Plan } from '@/lib/content/types';
 
 interface PricingCardsProps {
-  plans: PlanRow[];
-  /** Where the CTA goes — signup carries the chosen plan through. */
-  ctaHref?: (plan: PlanRow) => string;
+  plans: Plan[];
+  /** Where the CTA goes — defaults to the contact form with the plan pre-filled. */
+  ctaHref?: (plan: Plan) => string;
   ctaLabel?: string;
   className?: string;
 }
 
 export function PricingCards({
   plans,
-  ctaHref = (plan) => `/signup?plan=${plan.slug}`,
+  ctaHref = (plan) => `/contact?plan=${plan.slug}`,
   ctaLabel = 'Choose',
   className,
 }: PricingCardsProps) {
   return (
     <div className={cn('grid gap-6 lg:grid-cols-3', className)}>
       {plans.map((plan) => {
-        const featured = plan.is_featured;
+        const featured = plan.isFeatured;
         return (
           <div
             key={plan.id}
@@ -46,14 +46,14 @@ export function PricingCards({
 
             <div className="mt-6 flex items-baseline gap-1.5">
               <span className="text-[2.75rem] font-semibold leading-none tracking-tight text-charcoal-900">
-                {formatPrice(plan.setup_price_pence)}
+                {formatPrice(plan.setupPricePence)}
               </span>
               <span className="text-sm text-charcoal-500">setup</span>
             </div>
             <p className="mt-2 text-[0.9375rem] text-charcoal-600">
               then{' '}
               <span className="font-semibold text-charcoal-900">
-                {formatPrice(plan.monthly_price_pence)}
+                {formatPrice(plan.monthlyPricePence)}
               </span>{' '}
               a month
             </p>
@@ -82,7 +82,7 @@ export function PricingCards({
             </ul>
 
             <p className="mt-6 border-t border-border pt-4 text-xs text-charcoal-500">
-              Up to {plan.max_pages} pages · Cancel any time
+              Up to {plan.maxPages} pages · Cancel any time
             </p>
           </div>
         );

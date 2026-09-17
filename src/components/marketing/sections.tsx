@@ -144,7 +144,7 @@ export function CtaBand({
           <p className="mx-auto mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-charcoal-300">{body}</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button asChild size="xl">
-              <Link href="/signup">
+              <Link href="/contact">
                 {primary}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>

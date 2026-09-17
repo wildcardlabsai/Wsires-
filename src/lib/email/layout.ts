@@ -136,7 +136,6 @@ export function renderEmail({
             <div style="border-top:1px solid ${BORDER};padding-top:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#87837A;">
               <p style="margin:0 0 6px 0;">CymruSites — professional websites for Welsh businesses.</p>
               <p style="margin:0;">
-                <a href="${absoluteUrl('/dashboard')}" style="color:#87837A;text-decoration:underline;">Your dashboard</a> ·
                 <a href="${absoluteUrl('/contact')}" style="color:#87837A;text-decoration:underline;">Contact us</a> ·
                 <a href="${absoluteUrl('/privacy')}" style="color:#87837A;text-decoration:underline;">Privacy</a>
               </p>

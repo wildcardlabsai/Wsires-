@@ -266,13 +266,6 @@ export default async function HomePage() {
                 <DemoBadge className="shrink-0" />
               </div>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-charcoal-600">{example.description}</p>
-              <Link
-                href={example.demoHref}
-                className="mt-4 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-cymru-700 hover:underline"
-              >
-                View demo
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-              </Link>
             </article>
           ))}
         </div>

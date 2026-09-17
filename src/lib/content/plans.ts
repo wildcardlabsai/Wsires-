@@ -1,47 +1,38 @@
-import type { PlanRow } from '@/types/database';
+import type { Plan } from './types';
 
 /**
- * Pricing shown when the database is unreachable or not yet connected.
+ * Pricing plans shown on the marketing site.
  *
- * These mirror supabase/migrations/20250101000003_baseline_data.sql. Once
- * Supabase is configured the real `plans` rows are used instead, and prices
- * are edited from Admin → Settings rather than here.
+ * There is no admin panel or database — to change pricing, edit this file.
  */
-const now = new Date(0).toISOString();
 
-function plan(p: Partial<PlanRow> & Pick<PlanRow, 'slug' | 'name'>): PlanRow {
+function plan(p: Partial<Plan> & Pick<Plan, 'slug' | 'name'>): Plan {
   return {
-    id: `fallback-${p.slug}`,
+    id: p.slug,
     tagline: null,
     description: null,
-    setup_price_pence: 0,
-    monthly_price_pence: 0,
+    setupPricePence: 0,
+    monthlyPricePence: 0,
     currency: 'gbp',
-    max_pages: 3,
+    maxPages: 3,
     features: [],
-    stripe_setup_price_id: null,
-    stripe_monthly_price_id: null,
-    stripe_product_id: null,
-    is_active: true,
-    is_featured: false,
-    sort_order: 0,
-    created_at: now,
-    updated_at: now,
+    isFeatured: false,
+    sortOrder: 0,
     ...p,
-  } as PlanRow;
+  } as Plan;
 }
 
-export const fallbackPlans: PlanRow[] = [
+export const plans: Plan[] = [
   plan({
     slug: 'starter',
     name: 'Starter',
     tagline: 'Everything a local business needs to be found.',
     description:
       'A clean, fast three page website that makes you look established and gets the phone ringing.',
-    setup_price_pence: 29900,
-    monthly_price_pence: 2900,
-    max_pages: 3,
-    sort_order: 1,
+    setupPricePence: 29900,
+    monthlyPricePence: 2900,
+    maxPages: 3,
+    sortOrder: 1,
     features: [
       'Up to 3 pages',
       'Mobile responsive website',
@@ -62,11 +53,11 @@ export const fallbackPlans: PlanRow[] = [
     tagline: 'For businesses that want to be found locally.',
     description:
       'More pages, local SEO and a bilingual option — built for tradespeople covering several towns.',
-    setup_price_pence: 49900,
-    monthly_price_pence: 3900,
-    max_pages: 6,
-    is_featured: true,
-    sort_order: 2,
+    setupPricePence: 49900,
+    monthlyPricePence: 3900,
+    maxPages: 6,
+    isFeatured: true,
+    sortOrder: 2,
     features: [
       'Everything in Starter',
       'Up to 6 pages',
@@ -85,10 +76,10 @@ export const fallbackPlans: PlanRow[] = [
     tagline: 'For established businesses that want to grow.',
     description:
       'Advanced local SEO, booking and lead capture with priority support and frequent updates.',
-    setup_price_pence: 79900,
-    monthly_price_pence: 5900,
-    max_pages: 10,
-    sort_order: 3,
+    setupPricePence: 79900,
+    monthlyPricePence: 5900,
+    maxPages: 10,
+    sortOrder: 3,
     features: [
       'Everything in Business',
       'Up to 10 pages',

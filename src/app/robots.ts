@@ -8,8 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        /* Signed-in areas and previews must never be indexed. */
-        disallow: ['/dashboard', '/admin', '/onboarding', '/preview', '/api/', '/auth/'],
       },
     ],
     sitemap: absoluteUrl('/sitemap.xml'),

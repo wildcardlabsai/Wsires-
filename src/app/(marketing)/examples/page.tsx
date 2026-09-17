@@ -10,7 +10,7 @@ import { getPortfolio } from '@/lib/content/settings';
 export const metadata: Metadata = {
   title: 'Website examples',
   description:
-    'Working demonstration websites built on the CymruSites platform for Welsh trades, garages, cafés and professional services.',
+    'Illustrative examples of the kind of websites we build for Welsh trades, garages, cafés and professional services.',
   alternates: { canonical: '/examples' },
 };
 
@@ -22,8 +22,8 @@ export default async function ExamplesPage() {
       <Section tone="default" className="pb-8 pt-14 sm:pt-20">
         <SectionHeading
           eyebrow="Examples"
-          title="Websites built on this platform"
-          description="Each of these is a fully working demonstration site — the same architecture your website would run on. Click through and use them as you would a real site."
+          title="The kind of websites we build"
+          description="Each of these is an illustration of a layout and approach we would build for that trade — not a clickable live site."
         />
         <Alert variant="info" className="mt-8 max-w-3xl">
           <Info />
